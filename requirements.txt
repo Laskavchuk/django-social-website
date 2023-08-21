@@ -1,0 +1,4 @@
+Django==4.2.4
+django-environ==0.10.0
+ipdb==0.13.13
+flake8==6.1.0
