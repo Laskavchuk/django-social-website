@@ -19,9 +19,13 @@ from django.contrib import admin
 from django.urls import path, include
 from account.urls import urlpatterns as account_urlpatterns
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('account/', include(account_urlpatterns))
+    path('account/', include(account_urlpatterns)),
+    path('social-auth/',
+         include('social_django.urls', namespace='social')),
+    path('images/', include('images.urls', namespace='images')),
 ]
 
 if settings.DEBUG:
