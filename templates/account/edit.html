@@ -4,6 +4,9 @@
     <h1>Edit your account</h1>
     <p>You can edit your account using the following form:</p>
     <form method="post" enctype="multipart/form-data">
+    {% if user.profile.photo %}
+        <img src="{{ user.profile.photo.url }}"  width="80" height="80">
+    {% endif %}
         {{ user_form.as_p }}
         {{ profile_form.as_p }}
         {% csrf_token %}
