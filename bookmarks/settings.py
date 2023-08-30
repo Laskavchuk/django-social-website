@@ -46,7 +46,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # external
+    'social_django',
+    'django_extensions',
+    'easy_thumbnails',
     # internal
+    'images',
 ]
 
 MIDDLEWARE = [
@@ -112,6 +116,7 @@ AUTH_PASSWORD_VALIDATORS = [
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'account.authentication.EmailAuthBackend',
+    # 'social_core.backends.google.GoogleOAuth2',
 ]
 
 # Internationalization
