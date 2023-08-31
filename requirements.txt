@@ -9,3 +9,8 @@ werkzeug==2.3.7
 pyOpenSSL==23.2.0
 requests==2.31.0
 easy-thumbnails==2.8.5
+faker==19.3.1
+pytest==7.4.0
+pytest-django==4.5.2
+pytest-cov==4.1.0
+pytest-factoryboy==2.5.1

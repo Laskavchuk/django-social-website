@@ -9,26 +9,26 @@ from account.model_forms import UserRegistrationForm, UserEditForm, \
 from account.models import Profile
 
 
-def user_login(request):
-    if request.method == 'POST':
-        form = LoginForm(request.POST)
-        if form.is_valid():
-            cd = form.cleaned_data
-            user = authenticate(request,
-                                username=cd['username'],
-                                password=cd['password'])
-            if user is not None:
-                if user.is_active:
-                    login(request, user)
-                    return HttpResponse('Authenticated successfully')
-                else:
-                    return HttpResponse('Disabled account')
-            else:
-                return HttpResponse('Invalid login')
-    else:
-        form = LoginForm()
-    context = {'form': form}
-    return render(request, 'login.html', context)
+# def user_login(request):
+#     if request.method == 'POST':
+#         form = LoginForm(request.POST)
+#         if form.is_valid():
+#             cd = form.cleaned_data
+#             user = authenticate(request,
+#                                 username=cd['username'],
+#                                 password=cd['password'])
+#             if user is not None:
+#                 if user.is_active:
+#                     login(request, user)
+#                     return HttpResponse('Authenticated successfully')
+#                 else:
+#                     return HttpResponse('Disabled account')
+#             else:
+#                 return HttpResponse('Invalid login')
+#     else:
+#         form = LoginForm()
+#     context = {'form': form}
+#     return render(request, 'login.html', context)
 
 
 @login_required
@@ -45,7 +45,7 @@ def register(request):
             # но пока не сохранять его
             new_user = user_form.save(commit=False)
             # Установить выбранный пароль
-            new_user.set_password(user_form.cleaned_data['password'])
+            new_user.set_password(user_form.cleaned_data['password2'])
             new_user.save()
             # Создать профиль пользователя
             Profile.objects.create(user=new_user)
