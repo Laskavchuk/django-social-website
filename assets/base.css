@@ -212,6 +212,7 @@ ul.messages li a.close {
     margin:20px 10px 0;
 }
 a.like, a.follow { float:right; margin-top:-8px; }
+input.like {position:absolute; top:170px; right:1300px; cursor:pointer;}
 
 #image-list { overflow:hidden; }
 #image-list .image {
