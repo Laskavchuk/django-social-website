@@ -84,7 +84,8 @@ def test_registration(client, faker):
     errors = response.context['form'].errors
     assert errors['email'] == ['Enter a valid email address.']
 
-    data['email'] = faker.email()
+    email = faker.email()
+    data['email'] = email
     data['username'] = faker.word()
     data['password2'] = password
     response = client.post(url, data=data)
@@ -99,6 +100,14 @@ def test_registration(client, faker):
     response = client.post(url, data=data, follow=True)
     assert response.status_code == 200
 
+    user, _ = User.objects.get_or_create(email=email)
+    login_data = {'username': data['username'],
+                  'password': password}
+
     url = reverse('login')
     response = client.get(url)
     assert response.status_code == 200
+
+    response = client.post(url, data=login_data, follow=True)
+    assert response.redirect_chain[0][0] == '/account/'
+    assert response.redirect_chain[0][1] == 302
