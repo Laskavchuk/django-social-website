@@ -1,6 +1,8 @@
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 
+from account.models import Profile
+
 User = get_user_model()
 
 
@@ -111,3 +113,26 @@ def test_registration(client, faker):
     response = client.post(url, data=login_data, follow=True)
     assert response.redirect_chain[0][0] == '/account/'
     assert response.redirect_chain[0][1] == 302
+
+
+def test_edit(client, faker, login_client):
+    client, user = login_client()
+    url = reverse('edit')
+    profile = Profile.objects.create(user=user)
+    response = client.get(url)
+    assert response.status_code == 200
+    assert not profile.date_of_birth
+
+    data = {'first_name': 'Jake'}
+    assert user.first_name != data['first_name']
+    response = client.post(url, data=data)
+    assert response.status_code == 200
+    user.refresh_from_db()
+    assert user.first_name == data['first_name']
+
+    data['date_of_birth'] = '2023-01-20'
+    assert profile.date_of_birth != data['date_of_birth']
+    response = client.post(url, data=data)
+    assert response.status_code == 200
+    profile.refresh_from_db()
+    assert profile.date_of_birth.strftime('%Y-%m-%d') == data['date_of_birth']
